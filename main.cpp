@@ -51,10 +51,11 @@ int main()
 	
 	if(file.is_open()){
 		//Reading from the file
-		getline(file,text);
+		getline(file,text,'*');
+		//text ="the cats down in an";
 		
-		text = andis::toUpper(andis::trimSpace(text));
 		cout<<text<<"  closing input file"<<endl;
+		text = andis::toUpper(andis::trimSpace(text));
 		buildHuffmanTree(text);
 		
 		file.close();
@@ -62,7 +63,8 @@ int main()
 		cout<<"Boy, ooh, boy something is a miss."<<endl;
 	}
 	
-	//cout<<andis::toUpper(andis::trimSpace(text))<<endl;
+	int andrew;
+	cin>>andrew;
 	
 	return 0;
 }

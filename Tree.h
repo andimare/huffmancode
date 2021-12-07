@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <queue>
 #include <unordered_map>
@@ -83,7 +84,17 @@ void buildHuffmanTree(string text)
 	for (char ch: text) {
 		freq[ch]++;
 	}
-
+	
+	//Printing the HuffMan Table
+	char ch = 'A';
+	cout<<endl;
+	cout<<"Printing Huffman Table"<<endl;
+	
+	for(int i = 0; i < 26; i++){
+		cout<<ch<<" "<<freq[ch]<<endl;
+		ch += 1;
+	}
+	
 	// Create a priority queue to store live nodes of
 	// Huffman tree;
 	priority_queue<Node*, vector<Node*>, comp> pq;
@@ -118,12 +129,30 @@ void buildHuffmanTree(string text)
 	unordered_map<char, string> huffmanCode;
 	encode(root, "", huffmanCode);
 
-	cout << "Huffman Codes are :\n" << '\n';
-	for (auto pair: huffmanCode) {
-		cout << pair.first << " " << pair.second << '\n';
+	//cout << "Huffman Codes are :\n" << '\n';
+	cout<<endl;
+	
+	string file2Name;
+	cout<<"Creating huffman coding..."<<endl;
+	cout<<" enter name of file to store the table :";cin>>file2Name;
+	
+	ofstream file2;
+	file2.open(file2Name, ios::out |ios::app);
+	
+	if(file2.is_open()){
+		for (auto pair: huffmanCode) {
+			//cout << pair.first << " " << pair.second << '\n';
+			file2<< pair.first << " " << pair.second << '\n';
+		}
+		file2.close();
+	}else{
+		cout<<"Error file"<<endl;
 	}
+	/*for (auto pair: huffmanCode) {
+		cout << pair.first << " " << pair.second << '\n';
+	}*/
 
-	cout << "\nOriginal string was :\n" << text << '\n';
+	//cout << "\nOriginal string was :\n" << text << '\n';
 
 	// print encoded string
 	string str = "";
@@ -131,14 +160,45 @@ void buildHuffmanTree(string text)
 		str += huffmanCode[ch];
 	}
 
-	cout << "\nEncoded string is :\n" << str << '\n';
-
+	string file3Name;
+	cout<<"enter name of file to hold the encoded msg :";cin>>file3Name;
+	ofstream file3;
+	file3.open(file3Name, ios::out | ios::trunc);
+	
+	if(file3.is_open()){
+		//cout<<"Success"<<endl;
+		file3<< str;
+		file3.close();
+	}else{
+		cout<<"Error file 2"<<endl;
+	}
+	
+	//cout << "\nEncoded string is :\n" << str << '\n';
+	
 	// traverse the Huffman Tree again and this time
 	// decode the encoded string
+	
+	string file4Name,line;
+	cout<<"uncompressing file ..."<<endl;
+	cout<<" enter the compressed message file name :";cin>>file4Name;
+	
+	fstream file4;	
+	file4.open(file4Name, ios::in);
+	
+	if(file4.is_open()){
+		//cout<<"Success"<<endl;
+		getline(file4,line);
+		cout<<line<<endl;
+		
+		file4.close();
+	}else{
+		cout<<"Error file 4"<<endl;
+	}
+	
 	int index = -1;
 	cout << "\nDecoded string is: \n";
-	while (index < (int)str.size() - 2) {
-		decode(root, index, str);
+	while (index < (int)line.size() - 2) {
+		decode(root, index, line);
 	}
 }
 
