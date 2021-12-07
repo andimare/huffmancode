@@ -19,7 +19,7 @@ int main(){
 		cout<<"Let's assume the opposite for now"<<endl;
 	}
 	*/
-	
+	/*
 	string str3 = "huffIn.txt";
 	fstream file;
 	
@@ -39,7 +39,7 @@ int main(){
 		cout<<"Boy, ooh, boy something is a miss."<<endl;
 	}
 	
-	/*
+	
 	unordered_map <char, int> freq;
 	
 	for(char ch: "nyabwanga"){
@@ -86,7 +86,19 @@ int main(){
 	
 	cout<<text<<endl;
 	*/
+	
+	string text = "n&%^$3453543ya1b2w31a2342nga";
+	for(int i = 0; i < text.length() ; i++){
+		int dec = text[i];
+		if( dec > 64 && dec < 91)continue;
+		else if(!(dec > 96) || !(dec < 223)){
+			text.erase(i,1);
+			i--;
+		}
+		else text[i] -= 32;
+	}
 
+	cout<<text<<endl;
 	return 0;
 }
 
